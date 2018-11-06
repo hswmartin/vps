@@ -4,6 +4,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
+	"net/http/cookiejar"
 	"sync"
 )
 
@@ -31,11 +32,12 @@ func (t T667) Crawl() {
 
 }
 func crawl(s string) string {
-	client := &http.Client{}
+	j, _ := cookiejar.New(nil)
+	client := &http.Client{Jar: j}
 	req, err := http.NewRequest("GET", "https://t667.com/cart.php?gid=1", nil)
 	checkError(err)
 	req.Header.Add("user-agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Mobile Safari/537.36")
-	req.Header.Add("cookie", `WHMCSHy6VuOzeyv1n=rbdj1huiuvmnrvs7r5v17dm4t2; __ancc_token=TiwcXNgL/QfU6E1ciz3DOw==`)
+	//req.Header.Add("cookie", `WHMCSHy6VuOzeyv1n=rbdj1huiuvmnrvs7r5v17dm4t2; __ancc_token=TiwcXNgL/QfU6E1ciz3DOw==`)
 	res, err := client.Do(req)
 	checkError(err)
 	defer res.Body.Close()
@@ -46,4 +48,5 @@ func crawl(s string) string {
 		str = selection.Text()
 	})
 	return str
+
 }

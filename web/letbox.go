@@ -4,17 +4,17 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"net/http"
+	"net/http/cookiejar"
 )
 
 type Letbox struct {
 }
 
 func (l Letbox) Crawl() {
-	client := &http.Client{}
+	j, _ := cookiejar.New(nil)
+	client := &http.Client{Jar: j}
 	req, err := http.NewRequest("GET", "https://my.letbox.com/cart.php?a=add&pid=67", nil)
 	checkError(err)
-	req.Header.Add("cookie", `WHMCSAIWQpkmQ81cw=8b74436e9c26ba8b2ce8dcce946eeee5`)
-
 	res, err := client.Do(req)
 
 	checkError(err)
