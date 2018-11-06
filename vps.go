@@ -1,6 +1,6 @@
 package main
 
-import "vps/web"
+import "github.com/hswmartin/vps/web"
 
 func main() {
 	var t667 web.Web
